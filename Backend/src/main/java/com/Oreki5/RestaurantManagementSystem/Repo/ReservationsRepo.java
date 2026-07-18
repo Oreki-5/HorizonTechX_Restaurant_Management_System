@@ -6,4 +6,6 @@ import com.Oreki5.RestaurantManagementSystem.Models.Reservations;
 
 public interface ReservationsRepo extends JpaRepository<Reservations, Long> {
 
+    Reservations findByName(String name);
+
 }
