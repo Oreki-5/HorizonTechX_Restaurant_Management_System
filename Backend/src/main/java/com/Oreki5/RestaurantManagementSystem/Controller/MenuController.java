@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.Oreki5.RestaurantManagementSystem.Models.Menus;
@@ -22,18 +23,18 @@ public class MenuController {
     private MenuService menuService;
 
     @GetMapping
-    public List<Menus> getAll(){
-        return menuService.getAll();
+    public List<Menus> getAll(@RequestParam(required=false) String filter){
+        return menuService.getAll(filter);
     }
 
-    @PostMapping("/menu")
+    @PostMapping
     public Menus createMenu(@RequestBody Menus menu){
-        return menuService.createMenu(menu);
+        return menuService.saveMenu(menu);
     }
 
     @PutMapping
-    public Menus updatMenu(@RequestBody Menus menu){
-        return menuService.updateMenu(menu);
+    public Menus updateMenu(@RequestBody Menus menu){
+        return menuService.saveMenu(menu);
     }
 
     @DeleteMapping("/{id}")

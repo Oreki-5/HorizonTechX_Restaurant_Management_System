@@ -19,4 +19,8 @@ public class ReservationsService {
     public Reservations getByName(String name){
         return reservationsRepo.findByName(name);
     }
+
+    public void deleteReservation(long id){
+        reservationsRepo.deleteById(id);
+    }
 }

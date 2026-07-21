@@ -23,8 +23,8 @@ public class Orders {
 
     private boolean forceOrder;
 
-    private int tableId;
+    private long tableId;
 
-    private String status;
+    private String status="active";
 
 }

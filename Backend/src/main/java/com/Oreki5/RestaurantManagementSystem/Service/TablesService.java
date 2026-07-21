@@ -16,19 +16,16 @@ public class TablesService {
         return tablesRepo.findAllByStatus("free");
     }
 
-    public void deleteTable(int id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deleteTable'");
+    public void deleteTable(long id) {
+        tablesRepo.deleteById(id);
     }
 
     public Tables saveTable(Tables table) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'saveTable'");
+        return tablesRepo.save(table);
     }
 
     public List<Tables> getAllTablesSortByStatus() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAllTablesSortByStatus'");
+        return tablesRepo.findAllTablesByStatusAsc();
     }
 
 }

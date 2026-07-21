@@ -11,30 +11,33 @@ import com.Oreki5.RestaurantManagementSystem.Models.Inventory;
 import com.Oreki5.RestaurantManagementSystem.Models.Orders;
 import com.Oreki5.RestaurantManagementSystem.Service.InventoryService;
 import com.Oreki5.RestaurantManagementSystem.Service.OrdersService;
+import com.Oreki5.RestaurantManagementSystem.Service.ReportingService;
 
 @RestController
 @RequestMapping("/admin/report")
 public class ReportingController {
-    @Autowired
-    private OrdersService ordersService;
-    @Autowired
-    private InventoryService inventoryService;
 
-    @GetMapping
-    public List<Orders> getOrdersByPopularity(){
-        return ordersService.getOrdersByPopularity();
+    @Autowired
+    private ReportingService reportingService;
+
+    @GetMapping("/popular")
+    public List<Orders> getOrdersByPopularity() {
+        return reportingService.getOrdersByPopularity();
     }
-    @GetMapping
-    public List<Orders> getOrdersByTraffic(){
-        return ordersService.getOrdersByTraffic();
+
+    @GetMapping("/traffic")
+    public List<Orders> getOrdersByTraffic() {
+        return reportingService.getOrdersByTraffic();
     }
-    @GetMapping
-    public List<Inventory> getInventoryByUsage(){
-        return inventoryService.getInventoryByUsage();
+
+    @GetMapping("/usage")
+    public List<Inventory> getInventoryByUsage() {
+        return reportingService.getInventoryByUsage();
     }
-    @GetMapping
-    public List<Inventory> getInventoryWithSorts(){
-        return inventoryService.getInventoryWithSorts();
+
+    @GetMapping("/filters")
+    public List<Inventory> getInventoryWithSorts() {
+        return reportingService.getInventoryWithSorts();
     }
 
 }
