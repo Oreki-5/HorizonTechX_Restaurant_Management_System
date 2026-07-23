@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,55 +37,79 @@ public class OrdersService {
     @Autowired
     private TablesRepo tablesRepo;
 
-    public boolean consumeMenuItem(Menus menuItem, boolean force, int quantity) {
+    public List<Boolean> consumeMenuItem(Menus menuItem, boolean force, int quantity) {
         List<IngredientItem> ingredientsItems = menuItem.getIngredients();
-
+        List<Boolean> flags = new ArrayList<>();
+        flags.add(false);
+        flags.add(true);
         for (IngredientItem i : ingredientsItems) {
 
             Inventory item = inventoryRepo.findById(i.getItemId()).get();
-            if ((item.getStock() - (i.getQuantity() * quantity)) < 0 && !force) {
-                return false;
+            if ((item.getCurrentStock() - (i.getQuantity() * quantity)) < 0) {
+                flags.set(1, false);
+                if (!force) {
+                    flags.set(0, false);
+                } else {
+                    item.setCurrentStock(item.getCurrentStock() - (i.getQuantity() * quantity));
+                    flags.set(0, true);
+                    inventoryRepo.save(item);
+                }
 
             } else {
-                item.setStock(item.getStock() - i.getQuantity());
+                item.setCurrentStock(item.getCurrentStock() - (i.getQuantity() * quantity));
+                flags.set(0, true);
                 inventoryRepo.save(item);
             }
         }
-        return true;
+        return flags;
     }
 
     public ResponseObj saveOrder(Orders order) throws NullPointerException {
 
-        if (consumeMenuItem(menusRepo.findById(order.getMenuItemId()).get(), order.isForceOrder(),
-                order.getQuantity())) {
+        List<Boolean> consumedOrder = consumeMenuItem(menusRepo.findById(order.getMenuItemId()).get(),
+                order.isForceOrder(), order.getQuantity());
+
+        if (consumedOrder.get(0)) {
+
+            order.setOrderPrice(menusRepo.findById(order.getMenuItemId()).get().getPrice() * order.getQuantity());
+
             Tables t = tablesRepo.findById(order.getTableId()).get();
             t.setStatus("occupied");
             tablesRepo.save(t);
-            return new ResponseObj(ordersRepo.save(order));
+            if (!consumedOrder.get(1)) {
+                return new ResponseObj(ordersRepo.save(order),
+                        menusRepo.findById(order.getMenuItemId()).get().getName());
+            }
+            return new ResponseObj(ordersRepo.save(order),null);
         } else {
-            return new ResponseObj(null,menusRepo.findById(order.getMenuItemId()).get().getName());
+            return new ResponseObj(null, menusRepo.findById(order.getMenuItemId()).get().getName());
         }
-        // throw new NullPointerException("Bulk Order cancelled mid-way. Not enough
-        // ingredients for "
-        // + menusRepo.findById(order.getMenuItemId()).get().getName()
-        // + ". All Orders after this items were not ordered due to this error."
-        // + " If you want to override this restriction, put forceOrder flag to true");
+
     }
 
     public ResponseObj saveBulkOrders(BulkOrder bulkOrders) {
         List<Orders> orders = bulkOrders.getOrderList();
         List<Orders> finishedOrders = new ArrayList<>();
-        String warningStr = "";
+        String warningStr = "Some orders have insuffiecient ingredients : ";
+        String skippedItemList = null;
 
         for (Orders order : orders) {
             ResponseObj currentOrder = saveOrder(order);
             if (currentOrder.getData() != null) {
                 finishedOrders.add((Orders) currentOrder.getData());
             }
-            warningStr += currentOrder.getWarningMsg()+" ";
+            if (currentOrder.getWarningMsg() != null) {
+                if (skippedItemList == null) {
+                    skippedItemList = currentOrder.getWarningMsg()
+                            + ((order.isForceOrder()) ? " (Force Ordered)" : " (Skipped)") + " | ";
+                } else {
+                    skippedItemList += currentOrder.getWarningMsg() +  ((order.isForceOrder()) ? " (Force Ordered)" : " (Skipped)") + " | ";
+                }
+
+            }
 
         }
-        return new ResponseObj(finishedOrders,warningStr);
+        return new ResponseObj(finishedOrders, (skippedItemList != null) ? warningStr + skippedItemList : null);
     }
 
     public List<Orders> getAllOrdersOfTable(int id) {

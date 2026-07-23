@@ -1,4 +1,6 @@
 package com.Oreki5.RestaurantManagementSystem.Controller;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +21,10 @@ public class ReservationsController {
     @Autowired
     private ReservationsService reservationService;
 
-    
+    @GetMapping
+    public List<Reservations> getAll(){
+        return reservationService.getAll();
+    }
 
     @PostMapping
     public Reservations createReservation(@RequestBody Reservations reservations){

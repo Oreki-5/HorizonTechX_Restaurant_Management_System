@@ -34,7 +34,10 @@ public class OrdersController {
     @PostMapping
     public ResponseEntity<Object> createOrder(@RequestBody Orders order) {
         try {
-            ResponseObj res = new ResponseObj(ordersService.saveOrder(order));
+            ResponseObj res = ordersService.saveOrder(order);
+            if(res.getWarningMsg() != null){
+                res.setWarningMsg("The item '"+res.getWarningMsg()+"' does not have enough ingredients. Force order was : "+(order.isForceOrder()?"On." : "Off."));
+            }
             return new ResponseEntity<>(res, HttpStatus.OK);
         } catch (NullPointerException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
@@ -45,7 +48,7 @@ public class OrdersController {
     @PostMapping("/bulk")
     public ResponseEntity<Object> createBulkOrder(@RequestBody BulkOrder orders) {
         try {
-            ResponseObj res = new ResponseObj(ordersService.saveBulkOrders(orders));
+            ResponseObj res = ordersService.saveBulkOrders(orders);
             return new ResponseEntity<>(res, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
@@ -54,8 +57,14 @@ public class OrdersController {
     }
 
     @PutMapping
-    public Orders updateOrder(@RequestBody Orders order) throws Exception {
-        return ordersService.saveOrder(order);
+    public ResponseEntity<Object> updateOrder(@RequestBody Orders order) throws Exception {
+        try {
+            ResponseObj res = new ResponseObj(ordersService.saveOrder(order));
+            return new ResponseEntity<>(res, HttpStatus.OK);
+        } catch (NullPointerException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+        }
+
     }
 
     @GetMapping("/bill/{tableId}")

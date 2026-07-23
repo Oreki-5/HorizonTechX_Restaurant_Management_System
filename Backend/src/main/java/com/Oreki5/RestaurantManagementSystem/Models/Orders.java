@@ -1,16 +1,18 @@
 package com.Oreki5.RestaurantManagementSystem.Models;
 
+import java.time.Instant;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.SourceType;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
 @Data
 public class Orders {
     @Id
@@ -25,6 +27,12 @@ public class Orders {
 
     private long tableId;
 
-    private String status="active";
+    private String status = "active";
+
+    private int orderPrice;
+
+    @Column
+    @CreationTimestamp(source = SourceType.DB)
+    private Instant createdDate;
 
 }

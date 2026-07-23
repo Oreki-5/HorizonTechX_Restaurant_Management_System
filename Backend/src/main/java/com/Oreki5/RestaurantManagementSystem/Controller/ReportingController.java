@@ -6,12 +6,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.RequestParam;
 import com.Oreki5.RestaurantManagementSystem.Models.Inventory;
 import com.Oreki5.RestaurantManagementSystem.Models.Orders;
 import com.Oreki5.RestaurantManagementSystem.Service.InventoryService;
 import com.Oreki5.RestaurantManagementSystem.Service.OrdersService;
 import com.Oreki5.RestaurantManagementSystem.Service.ReportingService;
+import com.Oreki5.RestaurantManagementSystem.Models.ReportViews.InventoryUsageView;
+import com.Oreki5.RestaurantManagementSystem.Models.ReportViews.PopularityView;
+import com.Oreki5.RestaurantManagementSystem.Models.ReportViews.TrafficView;
+
 
 @RestController
 @RequestMapping("/admin/report")
@@ -21,17 +25,17 @@ public class ReportingController {
     private ReportingService reportingService;
 
     @GetMapping("/popular")
-    public List<Orders> getOrdersByPopularity() {
+    public List<PopularityView> getOrdersByPopularity() {
         return reportingService.getOrdersByPopularity();
     }
 
     @GetMapping("/traffic")
-    public List<Orders> getOrdersByTraffic() {
-        return reportingService.getOrdersByTraffic();
+    public List<TrafficView> getOrdersByTraffic(@RequestParam String date) {
+        return reportingService.getByTrafficAtDate(date);
     }
 
     @GetMapping("/usage")
-    public List<Inventory> getInventoryByUsage() {
+    public List<InventoryUsageView> getInventoryByUsage() {
         return reportingService.getInventoryByUsage();
     }
 

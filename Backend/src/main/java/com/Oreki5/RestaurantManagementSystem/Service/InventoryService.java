@@ -20,6 +20,10 @@ public class InventoryService {
         // extracting List<Inventory> form BulkInventory Object
         List<Inventory> inventoryList = bulkInventory.getInventoryList();
 
+        inventoryList.forEach(item->{
+            item.setCurrentStock(item.getLastUpdatedStock());
+        });
+
         inventoryRepo.saveAll(inventoryList);
     }
 
@@ -28,6 +32,7 @@ public class InventoryService {
     }
 
     public Inventory saveInventory(Inventory inventory) {
+        inventory.setCurrentStock(inventory.getLastUpdatedStock());
         return inventoryRepo.save(inventory);
     }
 

@@ -1,18 +1,18 @@
 package com.Oreki5.RestaurantManagementSystem.Models;
 
-import java.sql.Date;
+import java.time.Instant;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.SourceType;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
-import lombok.AllArgsConstructor;
+import jakarta.persistence.Id;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
 @Data
 public class Reservations {
     @Id
@@ -21,6 +21,11 @@ public class Reservations {
 
     private String name;
     private int numberOfCustomers;
-    private Date bookedDateTime;
+    private Instant bookedDateTime;
     private String status;
+
+    @Column
+    @CreationTimestamp(source = SourceType.DB)
+    private Instant createdDate;
+
 }

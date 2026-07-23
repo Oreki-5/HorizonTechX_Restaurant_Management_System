@@ -1,5 +1,7 @@
 package com.Oreki5.RestaurantManagementSystem.Service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,5 +24,9 @@ public class ReservationsService {
 
     public void deleteReservation(long id){
         reservationsRepo.deleteById(id);
+    }
+
+    public List<Reservations> getAll() {
+        return reservationsRepo.findAll();
     }
 }

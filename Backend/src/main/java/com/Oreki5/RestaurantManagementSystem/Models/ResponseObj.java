@@ -1,10 +1,8 @@
 package com.Oreki5.RestaurantManagementSystem.Models;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 public class ResponseObj {
     private Object data;
     private String warningMsg;

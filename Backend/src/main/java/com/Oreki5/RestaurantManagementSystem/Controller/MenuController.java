@@ -17,7 +17,7 @@ import com.Oreki5.RestaurantManagementSystem.Models.Menus;
 import com.Oreki5.RestaurantManagementSystem.Service.MenuService;
 
 @RestController
-@RequestMapping("/menu")
+@RequestMapping("/menus")
 public class MenuController {
     @Autowired
     private MenuService menuService;
