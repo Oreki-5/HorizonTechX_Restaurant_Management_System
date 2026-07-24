@@ -153,6 +153,9 @@ public class OrdersService {
                     (priceMap.get(menuId) * quantity));
             finalBill.addBillItem(billItem);
         });
+        Tables t = tablesRepo.findById(id);
+        t.setStatus("free");
+        tablesRepo.save(t);
 
         // After successfully creatinf Bill Object, we set all the current orders to
         // finished

@@ -15,7 +15,7 @@ public class InventoryService {
     @Autowired
     private InventoryRepo inventoryRepo;
 
-    public void bulkInsert(BulkInventory bulkInventory) {
+    public List<Inventory> bulkInsert(BulkInventory bulkInventory) {
 
         // extracting List<Inventory> form BulkInventory Object
         List<Inventory> inventoryList = bulkInventory.getInventoryList();
@@ -24,7 +24,7 @@ public class InventoryService {
             item.setCurrentStock(item.getLastUpdatedStock());
         });
 
-        inventoryRepo.saveAll(inventoryList);
+        return inventoryRepo.saveAll(inventoryList);
     }
 
     public List<Inventory> getAll() {

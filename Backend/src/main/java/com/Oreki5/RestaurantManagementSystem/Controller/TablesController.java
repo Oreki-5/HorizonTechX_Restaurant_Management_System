@@ -42,8 +42,8 @@ public class TablesController {
         return tablesService.saveTable(table);
     }
     
-    @DeleteMapping
-    public void deleteTable(@PathVariable int id){
+    @DeleteMapping("/{id}")
+    public void deleteTable(@PathVariable long id){
         tablesService.deleteTable(id);
     }
 

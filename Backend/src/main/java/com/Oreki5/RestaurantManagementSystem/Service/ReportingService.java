@@ -3,6 +3,7 @@ package com.Oreki5.RestaurantManagementSystem.Service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.Oreki5.RestaurantManagementSystem.Models.Inventory;
@@ -37,8 +38,15 @@ public class ReportingService {
         return inventoryRepo.getByUsage();
     }
 
-    public List<Inventory> getInventoryWithSorts() {
-
-        throw new UnsupportedOperationException("Unimplemented method 'getInventoryWithSorts'");
+    public List<Inventory> getInventoryWithSorts(String name, String order) {
+        boolean flag = false;
+        if (!name.isEmpty() && order.equalsIgnoreCase("ASC")) {
+            flag = true;
+        }
+        Sort s = flag ? Sort.by(order.equalsIgnoreCase("ASC") ? Sort.Direction.ASC : Sort.Direction.DESC, name) : null;
+        if (s != null)
+            return inventoryRepo.findAll(s);
+        else
+            return inventoryRepo.findAll();
     }
 }

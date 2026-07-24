@@ -16,4 +16,6 @@ public interface TablesRepo extends JpaRepository<Tables, Long> {
     @Query(nativeQuery = true, value = "SELECT t.* FROM tables as t ORDER BY t.status ASC")
     public List<Tables> findAllTablesByStatusAsc();
 
+    public Tables findById(int id);
+
 }

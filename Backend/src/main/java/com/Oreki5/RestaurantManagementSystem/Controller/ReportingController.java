@@ -5,17 +5,14 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.Oreki5.RestaurantManagementSystem.Models.Inventory;
-import com.Oreki5.RestaurantManagementSystem.Models.Orders;
-import com.Oreki5.RestaurantManagementSystem.Service.InventoryService;
-import com.Oreki5.RestaurantManagementSystem.Service.OrdersService;
-import com.Oreki5.RestaurantManagementSystem.Service.ReportingService;
 import com.Oreki5.RestaurantManagementSystem.Models.ReportViews.InventoryUsageView;
 import com.Oreki5.RestaurantManagementSystem.Models.ReportViews.PopularityView;
 import com.Oreki5.RestaurantManagementSystem.Models.ReportViews.TrafficView;
-
+import com.Oreki5.RestaurantManagementSystem.Service.ReportingService;
 
 @RestController
 @RequestMapping("/admin/report")
@@ -40,8 +37,9 @@ public class ReportingController {
     }
 
     @GetMapping("/filters")
-    public List<Inventory> getInventoryWithSorts() {
-        return reportingService.getInventoryWithSorts();
+    public List<Inventory> getInventoryWithSorts(@RequestParam(required = false, name = "name") String name,
+            @RequestParam(required = false, name = "order") String order) {
+        return reportingService.getInventoryWithSorts(name, order);
     }
 
 }
