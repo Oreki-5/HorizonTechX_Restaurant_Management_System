@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.Oreki5.RestaurantManagementSystem.Models.Bill;
 import com.Oreki5.RestaurantManagementSystem.Models.BillItem;
+import com.Oreki5.RestaurantManagementSystem.Models.BillRecords;
 import com.Oreki5.RestaurantManagementSystem.Models.BulkOrder;
 import com.Oreki5.RestaurantManagementSystem.Models.IngredientItem;
 import com.Oreki5.RestaurantManagementSystem.Models.Inventory;
@@ -18,6 +19,7 @@ import com.Oreki5.RestaurantManagementSystem.Models.Menus;
 import com.Oreki5.RestaurantManagementSystem.Models.Orders;
 import com.Oreki5.RestaurantManagementSystem.Models.ResponseObj;
 import com.Oreki5.RestaurantManagementSystem.Models.Tables;
+import com.Oreki5.RestaurantManagementSystem.Repo.BillRecordsRepo;
 import com.Oreki5.RestaurantManagementSystem.Repo.InventoryRepo;
 import com.Oreki5.RestaurantManagementSystem.Repo.MenusRepo;
 import com.Oreki5.RestaurantManagementSystem.Repo.OrdersRepo;
@@ -36,6 +38,9 @@ public class OrdersService {
 
     @Autowired
     private TablesRepo tablesRepo;
+
+    @Autowired
+    private BillRecordsRepo billRecordsRepo;
 
     public List<Boolean> consumeMenuItem(Menus menuItem, boolean force, int quantity) {
         List<IngredientItem> ingredientsItems = menuItem.getIngredients();
@@ -80,7 +85,7 @@ public class OrdersService {
                 return new ResponseObj(ordersRepo.save(order),
                         menusRepo.findById(order.getMenuItemId()).get().getName());
             }
-            return new ResponseObj(ordersRepo.save(order),null);
+            return new ResponseObj(ordersRepo.save(order), null);
         } else {
             return new ResponseObj(null, menusRepo.findById(order.getMenuItemId()).get().getName());
         }
@@ -103,7 +108,8 @@ public class OrdersService {
                     skippedItemList = currentOrder.getWarningMsg()
                             + ((order.isForceOrder()) ? " (Force Ordered)" : " (Skipped)") + " | ";
                 } else {
-                    skippedItemList += currentOrder.getWarningMsg() +  ((order.isForceOrder()) ? " (Force Ordered)" : " (Skipped)") + " | ";
+                    skippedItemList += currentOrder.getWarningMsg()
+                            + ((order.isForceOrder()) ? " (Force Ordered)" : " (Skipped)") + " | ";
                 }
 
             }
@@ -156,6 +162,11 @@ public class OrdersService {
         Tables t = tablesRepo.findById(id);
         t.setStatus("free");
         tablesRepo.save(t);
+
+        // Save the bill record in Bill Records Table
+        if (finalBill.getTotal() != 0) {
+            billRecordsRepo.save(new BillRecords(id, finalBill.getTotal()));
+        }
 
         // After successfully creatinf Bill Object, we set all the current orders to
         // finished

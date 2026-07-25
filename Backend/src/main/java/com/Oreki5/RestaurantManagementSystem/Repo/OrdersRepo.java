@@ -20,6 +20,14 @@ public interface OrdersRepo extends JpaRepository<Orders, Long> {
     @Query(nativeQuery=true, value="SELECT  DISTINCT m.name as menuItem, SUM(o.quantity) as orderedAmount FROM orders as o INNER JOIN menus as m on m.id = o.menu_item_id GROUP by m.name order by COUNT(*) DESC")
     public List<PopularityView> getByPoularity();
 
+    @Query(nativeQuery=true, value="SELECT  DISTINCT m.name as menuItem, SUM(o.quantity) as orderedAmount FROM orders as o INNER JOIN menus as m on m.id = o.menu_item_id WHERE strftime('%Y-%m-%d',o.created_date) = strftime('%Y-%m-%d',:dat) GROUP by m.name order by COUNT(*) DESC")
+    public List<PopularityView> getByPoularity(@Param("dat")String date);
+
+    @Query(nativeQuery=true, value="SELECT  DISTINCT m.name as menuItem, SUM(o.quantity) as orderedAmount FROM orders as o INNER JOIN menus as m on m.id = o.menu_item_id WHERE strftime('%Y-%m-%d',o.created_date) BETWEEN  strftime('%Y-%m-%d',:sdate) and strftime('%Y-%m-%d',:edate) GROUP by m.name order by COUNT(*) DESC")
+    public List<PopularityView> getByPoularity(@Param("sdate")String startDate, @Param("edate")String endDate);
+
+
+
     @Query(nativeQuery = true, value = "select CASE WHEN strftime('%H:%M',o.created_date) BETWEEN  strftime('%H:%M','03:30') and strftime('%H:%M','06:30') then 'Morning' when strftime('%H:%M',o.created_date) BETWEEN  strftime('%H:%M','06:31') and strftime('%H:%M','09:30') then 'Afternoon' when strftime('%H:%M',o.created_date) BETWEEN  strftime('%H:%M','09:31') and strftime('%H:%M','12:30') then 'Evening' when strftime('%H:%M',o.created_date) BETWEEN  strftime('%H:%M','12:31') and strftime('%H:%M','17:30') then 'Night' END as quarters , COUNT(*) as orderedAmount from orders as o WHERE strftime('%Y-%m-%d',o.created_date) = strftime('%Y-%m-%d',:dat) GROUP BY quarters order by o.created_date ASC")
     public List<TrafficView> getByTrafficAtDate(@Param("dat")String date);
 

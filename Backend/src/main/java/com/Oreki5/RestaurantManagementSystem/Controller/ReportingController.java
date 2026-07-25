@@ -22,8 +22,10 @@ public class ReportingController {
     private ReportingService reportingService;
 
     @GetMapping("/popular")
-    public List<PopularityView> getOrdersByPopularity() {
-        return reportingService.getOrdersByPopularity();
+    public List<PopularityView> getOrdersByPopularity(@RequestParam(required = false) String startDate,
+            @RequestParam(required = false) String endDate) {
+        
+        return reportingService.getOrdersByPopularity(startDate, endDate);
     }
 
     @GetMapping("/traffic")

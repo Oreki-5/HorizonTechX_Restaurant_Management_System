@@ -1,5 +1,6 @@
 package com.Oreki5.RestaurantManagementSystem.Service;
 
+import java.time.Instant;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +23,10 @@ public class InventoryService {
 
         inventoryList.forEach(item->{
             item.setCurrentStock(item.getLastUpdatedStock());
+            item.setUpdatedAt(Instant.now());
         });
 
-        return inventoryRepo.saveAll(inventoryList);
+        return inventoryRepo.saveAllAndFlush(inventoryList);
     }
 
     public List<Inventory> getAll() {
@@ -33,6 +35,7 @@ public class InventoryService {
 
     public Inventory saveInventory(Inventory inventory) {
         inventory.setCurrentStock(inventory.getLastUpdatedStock());
+        inventory.setUpdatedAt(Instant.now());
         return inventoryRepo.save(inventory);
     }
 

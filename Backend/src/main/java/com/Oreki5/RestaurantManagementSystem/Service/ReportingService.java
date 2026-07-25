@@ -22,9 +22,16 @@ public class ReportingService {
     @Autowired
     private InventoryRepo inventoryRepo;
 
-    public List<PopularityView> getOrdersByPopularity() {
+    public List<PopularityView> getOrdersByPopularity(String startDate, String endDate) {
 
-        return ordersRepo.getByPoularity();
+        if (startDate != null && endDate != null) {
+            return ordersRepo.getByPoularity(startDate, endDate);
+        } else if (startDate != null) {
+            return ordersRepo.getByPoularity(startDate);
+
+        } else {
+            return ordersRepo.getByPoularity();
+        }
 
     }
 
@@ -49,4 +56,5 @@ public class ReportingService {
         else
             return inventoryRepo.findAll();
     }
+
 }

@@ -1,5 +1,6 @@
 package com.Oreki5.RestaurantManagementSystem.Service;
 
+import java.time.Instant;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +19,8 @@ public class ReservationsService {
         return reservationsRepo.save(reservation);
     }
 
-    public Reservations getByName(String name){
-        return reservationsRepo.findByName(name);
+    public List<Reservations> getByName(String name){
+        return reservationsRepo.findAllByName(name);
     }
 
     public void deleteReservation(long id){
@@ -29,4 +30,9 @@ public class ReservationsService {
     public List<Reservations> getAll() {
         return reservationsRepo.findAll();
     }
+
+    public List<Reservations> getAllUpcomingReservations(Instant date) {
+       return reservationsRepo.findUpcomingReservations(Long.toString(date.toEpochMilli()));
+    }
+
 }

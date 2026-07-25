@@ -1,4 +1,7 @@
 package com.Oreki5.RestaurantManagementSystem.Controller;
+
+import java.time.Instant;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,30 +25,37 @@ public class ReservationsController {
     private ReservationsService reservationService;
 
     @GetMapping
-    public List<Reservations> getAll(){
+    public List<Reservations> getAll() {
         return reservationService.getAll();
     }
 
     @PostMapping
-    public Reservations createReservation(@RequestBody Reservations reservations){
+    public Reservations createReservation(@RequestBody Reservations reservations) {
         return reservationService.saveReservation(reservations);
     }
 
+    @GetMapping("/upcoming")
+    public List<Reservations> getUpcoming() {
+
+        Instant currentInstant = Instant.now();
+        return reservationService.getAllUpcomingReservations(currentInstant);
+    }
+
     @GetMapping("/{name}")
-    public Reservations getByName(@PathVariable String name){
+    public List<Reservations> getByName(@PathVariable String name) {
         return reservationService.getByName(name);
     }
 
     @PutMapping
-    public Reservations updateReservation(@RequestBody Reservations reservations){
+    public Reservations updateReservation(@RequestBody Reservations reservations) {
         return reservationService.saveReservation(reservations);
     }
-    
+
     @DeleteMapping("/{id}")
-    public void deleteReservation(@PathVariable long id){
+    public void deleteReservation(@PathVariable long id) {
         reservationService.deleteReservation(id);
     }
 
-
+    
 
 }
