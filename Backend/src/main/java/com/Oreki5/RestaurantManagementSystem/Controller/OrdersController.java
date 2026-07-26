@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.Oreki5.RestaurantManagementSystem.Models.Bill;
+import com.Oreki5.RestaurantManagementSystem.Models.BillRecords;
 import com.Oreki5.RestaurantManagementSystem.Models.BulkOrder;
 import com.Oreki5.RestaurantManagementSystem.Models.Orders;
 import com.Oreki5.RestaurantManagementSystem.Models.ResponseObj;
@@ -70,5 +71,10 @@ public class OrdersController {
     @GetMapping("/bill/{tableId}")
     public Bill generateBills(@PathVariable int tableId) {
         return ordersService.generateBills(tableId);
+    }
+
+    @GetMapping("/bills")
+    public List<BillRecords> getRecentBills() {
+        return ordersService.getLatestBills();
     }
 }

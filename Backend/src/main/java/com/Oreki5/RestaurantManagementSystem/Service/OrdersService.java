@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.Oreki5.RestaurantManagementSystem.Models.Bill;
@@ -174,6 +175,11 @@ public class OrdersService {
 
         return finalBill;
 
+    }
+
+    public List<BillRecords> getLatestBills(){
+        Sort s = Sort.by(Sort.Direction.DESC, "createdDate");
+        return billRecordsRepo.findAll(s);
     }
 
 }
