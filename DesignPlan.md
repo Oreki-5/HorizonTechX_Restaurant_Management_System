@@ -38,10 +38,10 @@ are already used so we don't restore item's quantity in the inventory
 - Payments service will be outside of the scope for this project.
 
 ## Reporting Feautures:
-* Which dishes got ordered the most between two given Dates (to manage inventory and priority)
-* Which section of the day got most tables reserved (to check traffic)
-* Which ingredients got used the most
-* list of all inventory with filters for expiration date(desc),stock(desc),last updated at(desc)
+* Popular menu items : Show menu items by how many times they were orders within two dates.
+* Daily Ingredient Usage : Shows which ingredients were used the most each day.
+* Orders traffic : Shows amount of orders requested for each quarter of the day (Morning, Afternoon, Evening, Night) at specified date.
+* Inventory Analysis : Inventory data with customizable sorting filters.
 * (May add more features along the way)
 
 ## Tech Stack:
