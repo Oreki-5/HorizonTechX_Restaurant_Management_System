@@ -1,0 +1,854 @@
+{
+  "info": {
+    "_postman_id": "52069133-1edd-4487-96c9-bfe2a5be89a0",
+    "name": "Restaurant Management System",
+    "description": "TASK 3: Restaurant Management System  \n• Set up backend using Django or Express.js to handle restaurant operations.  \n• Design database models for menu items, orders, tables, reservations, and inventory.  \n• Create APIs for placing orders, reserving tables, updating inventory, and viewing menu.  \n• Implement logic for order processing, table availability.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "52460174",
+    "_collection_link": "https://go.postman.co/collection/52460174-52069133-1edd-4487-96c9-bfe2a5be89a0?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Inventory Management System",
+      "item": [
+        {
+          "name": "Get all inventory",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/inventory",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "inventory"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Add an item in Inventory",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"itemId\": 8,\r\n    \"itemName\": \"wheat\",\r\n    \"lastUpdatedStock\": 100,\r\n    \"unitOfMeaure\": \"kg\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/inventory",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "inventory"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Add bulk items in Inventory",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"inventoryList\": [\r\n        {\r\n            \"itemId\": 1,\r\n            \"itemName\": \"tomato\",\r\n            \"unitOfMeaure\": \"kg\",\r\n            \"lastUpdatedStock\": 100\r\n        },\r\n        {\r\n            \"itemId\": 2,\r\n            \"itemName\": \"onion\",\r\n            \"unitOfMeaure\": \"kg\",\r\n            \"lastUpdatedStock\": 100\r\n        },\r\n        {\r\n            \"itemId\": 3,\r\n            \"itemName\": \"capsicum\",\r\n            \"unitOfMeaure\": \"kg\",\r\n            \"lastUpdatedStock\": 100\r\n        },\r\n        {\r\n            \"itemId\": 4,\r\n            \"itemName\": \"mirchi masala\",\r\n            \"unitOfMeaure\": \"kg\",\r\n            \"lastUpdatedStock\": 100\r\n        },\r\n        {\r\n            \"itemId\": 5,\r\n            \"itemName\": \"garam masala\",\r\n            \"unitOfMeaure\": \"kg\",\r\n            \"lastUpdatedStock\": 100\r\n        },\r\n        {\r\n            \"itemId\": 6,\r\n            \"itemName\": \"cabbage\",\r\n            \"unitOfMeaure\": \"amount\",\r\n            \"lastUpdatedStock\": 200\r\n        }\r\n    ]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/inventory/bulk",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "inventory",
+                "bulk"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update an inventory",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"itemId\": 1,\r\n    \"itemName\": \"tomato\",\r\n    \"lastUpdatedStock\": 100,\r\n    \"unitOfMeaure\": \"kg\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/inventory",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "inventory"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete an item in Inventory",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"asdqwe\",\r\n    \"numberOfCustomers\": 0,\r\n    \"bookedDateTime\": \"1970-01-15T19:55:53.727Z\",\r\n    \"status\": \"active\",\r\n    \"createdDate\": \"1970-01-15T19:55:53.727Z\"\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/inventory",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "inventory"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Menu System",
+      "item": [
+        {
+          "name": "Create Menu Item",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"idli\",\r\n  \"price\":50,\r\n  \"status\":\"active\",\r\n  \"ingredients\": [\r\n    {\r\n      \"itemId\": 7,\r\n      \"quantity\": 4\r\n    },\r\n    {\r\n      \"itemId\": 1,\r\n      \"quantity\": 6\r\n    },\r\n    {\r\n      \"itemId\": 8,\r\n      \"quantity\": 6\r\n    }\r\n  ]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/menus",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "menus"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Menu Item",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"asdqwe\",\r\n    \"numberOfCustomers\": 0,\r\n    \"bookedDateTime\": \"1970-01-15T19:55:53.727Z\",\r\n    \"status\": \"active\",\r\n    \"createdDate\": \"1970-01-15T19:55:53.727Z\"\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/menus?filter=inactive",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "menus"
+              ],
+              "query": [
+                {
+                  "key": "filter",
+                  "value": "inactive",
+                  "type": "text"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update a Menu Item",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"id\": 5,\r\n    \"ingredients\": [\r\n        {\r\n            \"itemId\": 7,\r\n            \"quantity\": 5\r\n        },\r\n        {\r\n            \"itemId\": 1,\r\n            \"quantity\": 6\r\n        },\r\n        {\r\n            \"itemId\": 8,\r\n            \"quantity\": 6\r\n        }\r\n    ],\r\n    \"name\": \"idli\",\r\n    \"price\": 50,\r\n    \"status\": \"active\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/menus",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "menus"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Soft Delete a Menu Item",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"asdqwe\",\r\n    \"numberOfCustomers\": 0,\r\n    \"bookedDateTime\": \"1970-01-15T19:55:53.727Z\",\r\n    \"status\": \"active\",\r\n    \"createdDate\": \"1970-01-15T19:55:53.727Z\"\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/menus/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "menus",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Recover deleted Menu Item",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"asdqwe\",\r\n    \"numberOfCustomers\": 0,\r\n    \"bookedDateTime\": \"1970-01-15T19:55:53.727Z\",\r\n    \"status\": \"active\",\r\n    \"createdDate\": \"1970-01-15T19:55:53.727Z\"\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/menus/restore/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "menus",
+                "restore",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Reservation System",
+      "item": [
+        {
+          "name": "Create a new reservation",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"rajesh\",\r\n    \"numberOfCustomers\": 4,\r\n    \"bookedDateTime\": \"2026-07-30T08:07:51Z\",\r\n    \"status\": \"pending\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/reserve",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "reserve"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Upcoming Reservation",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "http://localhost:8080/reserve/upcoming",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "reserve",
+                "upcoming"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get all reservations",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "http://localhost:8080/reserve",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "reserve"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get reservation by name",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/reserve/rajesh",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "reserve",
+                "rajesh"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update existing reservation",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"bookedDateTime\": \"2023-01-25T20:40:00Z\",\r\n    \"createdDate\": \"2026-07-26T09:56:24Z\",\r\n    \"id\": 1,\r\n    \"name\": \"oreki\",\r\n    \"numberOfCustomers\": 4,\r\n    \"status\": \"active\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/reserve",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "reserve"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete a reservation",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/reserve/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "reserve",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Order System",
+      "item": [
+        {
+          "name": "Create an Order",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"menuItemId\": 4,\r\n    \"quantity\": 1,\r\n    \"forceOrder\": true,\r\n    \"tableId\": 3,\r\n    \"status\": \"active\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/orders",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "orders"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create a Bulk Order",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"orderList\": [\r\n        {\r\n            \"menuItemId\": 4,\r\n            \"quantity\": 1,\r\n            \"forceOrder\": false,\r\n            \"tableId\": 2\r\n        },\r\n        {\r\n            \"menuItemId\": 2,\r\n            \"quantity\": 3,\r\n            \"forceOrder\": false,\r\n            \"tableId\": 2\r\n        }\r\n    ]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/orders/bulk",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "orders",
+                "bulk"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get all orders of tableID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/orders/2",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "orders",
+                "2"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update an Order",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"createdDate\": \"2026-07-25T10:08:00Z\",\r\n    \"forceOrder\": false,\r\n    \"id\": 6,\r\n    \"menuItemId\": 4,\r\n    \"orderPrice\": 70,\r\n    \"quantity\": 3,\r\n    \"status\": \"active\",\r\n    \"tableId\": 2\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/orders",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "orders"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Generate Bill for Table ID",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"seatSize\": 4,\r\n    \"status\": \"free\"\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/orders/bill/3",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "orders",
+                "bill",
+                "3"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Recently Generated Bills",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"orderList\": [\r\n        {\r\n            \"menuItemId\": 1,\r\n            \"quantity\": 4,\r\n            \"forceOrder\": false,\r\n            \"tableId\": 1,\r\n            \"status\": \"active\"\r\n        },\r\n        {\r\n            \"menuItemId\": 2,\r\n            \"quantity\": 5,\r\n            \"forceOrder\": false,\r\n            \"tableId\": 1,\r\n            \"status\": \"active\"\r\n        }\r\n    ]\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/orders/bills",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "orders",
+                "bills"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Reporting System",
+      "item": [
+        {
+          "name": "Get Orders By Popularity",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"orderList\": [\r\n        {\r\n            \"menuItemId\": 1,\r\n            \"quantity\": 4,\r\n            \"forceOrder\": false,\r\n            \"tableId\": 1,\r\n            \"status\": \"active\"\r\n        },\r\n        {\r\n            \"menuItemId\": 2,\r\n            \"quantity\": 5,\r\n            \"forceOrder\": false,\r\n            \"tableId\": 1,\r\n            \"status\": \"active\"\r\n        }\r\n    ]\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/admin/report/popular?startDate=2026-07-23&endDate=2026-07-25",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "admin",
+                "report",
+                "popular"
+              ],
+              "query": [
+                {
+                  "key": "startDate",
+                  "value": "2026-07-23"
+                },
+                {
+                  "key": "endDate",
+                  "value": "2026-07-25"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Traffic of Order based on 4 quarters of day",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"orderList\": [\r\n        {\r\n            \"menuItemId\": 1,\r\n            \"quantity\": 4,\r\n            \"forceOrder\": false,\r\n            \"tableId\": 1,\r\n            \"status\": \"active\"\r\n        },\r\n        {\r\n            \"menuItemId\": 2,\r\n            \"quantity\": 5,\r\n            \"forceOrder\": false,\r\n            \"tableId\": 1,\r\n            \"status\": \"active\"\r\n        }\r\n    ]\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/admin/report/traffic?date=2026-07-25",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "admin",
+                "report",
+                "traffic"
+              ],
+              "query": [
+                {
+                  "key": "date",
+                  "value": "2026-07-25"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Inventory  items by usage",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"orderList\": [\r\n        {\r\n            \"menuItemId\": 1,\r\n            \"quantity\": 4,\r\n            \"forceOrder\": false,\r\n            \"tableId\": 1,\r\n            \"status\": \"active\"\r\n        },\r\n        {\r\n            \"menuItemId\": 2,\r\n            \"quantity\": 5,\r\n            \"forceOrder\": false,\r\n            \"tableId\": 1,\r\n            \"status\": \"active\"\r\n        }\r\n    ]\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/admin/report/usage",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "admin",
+                "report",
+                "usage"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All inventory (with sorting filters)",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"orderList\": [\r\n        {\r\n            \"menuItemId\": 1,\r\n            \"quantity\": 4,\r\n            \"forceOrder\": false,\r\n            \"tableId\": 1,\r\n            \"status\": \"active\"\r\n        },\r\n        {\r\n            \"menuItemId\": 2,\r\n            \"quantity\": 5,\r\n            \"forceOrder\": false,\r\n            \"tableId\": 1,\r\n            \"status\": \"active\"\r\n        }\r\n    ]\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/admin/report/filters?name=itemName&order=asc",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "admin",
+                "report",
+                "filters"
+              ],
+              "query": [
+                {
+                  "key": "name",
+                  "value": "itemName"
+                },
+                {
+                  "key": "order",
+                  "value": "asc"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Misc. CRUD System",
+      "item": [
+        {
+          "name": "Tables",
+          "item": [
+            {
+              "name": "Get all tables",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8080/tables",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "tables"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Create new table",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"seatSize\": 4,\r\n    \"status\": \"free\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8080/tables",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "tables"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update Table",
+              "request": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"seatSize\": 4,\r\n    \"status\": \"free\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8080/tables",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "tables"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete Table",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8080/tables/4",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "tables",
+                    "4"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
