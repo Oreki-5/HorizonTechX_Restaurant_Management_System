@@ -44,4 +44,6 @@ public class ReportingController {
         return reportingService.getInventoryWithSorts(name, order);
     }
 
+    // how many reservations by quarters o day By Date
+
 }
