@@ -1,11 +1,11 @@
 {
   "info": {
-    "_postman_id": "52069133-1edd-4487-96c9-bfe2a5be89a0",
+    "_postman_id": "8339f89c-73e0-4ad1-bcba-9ceafaa9465a",
     "name": "Restaurant Management System",
     "description": "TASK 3: Restaurant Management System  \n• Set up backend using Django or Express.js to handle restaurant operations.  \n• Design database models for menu items, orders, tables, reservations, and inventory.  \n• Create APIs for placing orders, reserving tables, updating inventory, and viewing menu.  \n• Implement logic for order processing, table availability.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "_exporter_id": "52460174",
-    "_collection_link": "https://go.postman.co/collection/52460174-52069133-1edd-4487-96c9-bfe2a5be89a0?source=collection_link"
+    "_collection_link": "https://go.postman.co/collection/52460174-8339f89c-73e0-4ad1-bcba-9ceafaa9465a?source=collection_link"
   },
   "item": [
     {
@@ -26,18 +26,19 @@
               "path": [
                 "inventory"
               ]
-            }
+            },
+            "description": "Returns all inventory items"
           },
           "response": []
         },
         {
-          "name": "Add an item in Inventory",
+          "name": "Add or Update an item in Inventory",
           "request": {
             "method": "POST",
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"itemId\": 8,\r\n    \"itemName\": \"wheat\",\r\n    \"lastUpdatedStock\": 100,\r\n    \"unitOfMeaure\": \"kg\"\r\n}",
+              "raw": "{\r\n    \"itemId\": 8,\r\n    \"itemName\": \"wheat\",\r\n    \"lastUpdatedStock\": 200,\r\n    \"unitOfMeaure\": \"kg\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -54,7 +55,8 @@
               "path": [
                 "inventory"
               ]
-            }
+            },
+            "description": "Creates or Updates an Inventory Record. Note that the ID must be provided in both the cases since the Database does not generate a unique ID for each record. This is only applicable for this table only and this decision was made intentionally in design phase."
           },
           "response": []
         },
@@ -83,35 +85,8 @@
                 "inventory",
                 "bulk"
               ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Update an inventory",
-          "request": {
-            "method": "PUT",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n    \"itemId\": 1,\r\n    \"itemName\": \"tomato\",\r\n    \"lastUpdatedStock\": 100,\r\n    \"unitOfMeaure\": \"kg\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
             },
-            "url": {
-              "raw": "http://localhost:8080/inventory",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "8080",
-              "path": [
-                "inventory"
-              ]
-            }
+            "description": "Adds and/or updates Inventory items in bulk .\n\nYou can convert any data file into this JSON body by just setting value of \"inventoryList\" attribute to the data that is converted to JSON.\n\neg.\n\n{\n\n\"inventoryList\": \\[\\]\n\n}\n\nThe ID of items which already exists will be replaced by new ones, and new IDs will have their own records."
           },
           "response": []
         },
@@ -134,7 +109,8 @@
               "path": [
                 "inventory"
               ]
-            }
+            },
+            "description": "Deletes an item from inventory by its ID."
           },
           "response": []
         }
@@ -167,7 +143,8 @@
               "path": [
                 "menus"
               ]
-            }
+            },
+            "description": "Creates a Menu Item"
           },
           "response": []
         },
@@ -196,11 +173,11 @@
               "query": [
                 {
                   "key": "filter",
-                  "value": "inactive",
-                  "type": "text"
+                  "value": "inactive"
                 }
               ]
-            }
+            },
+            "description": "Returns all menu items (Only Active Menus by default)\n\nYou can set the filter parameter to \"active\" or \"inactive\" to get respective menu items."
           },
           "response": []
         },
@@ -228,7 +205,8 @@
               "path": [
                 "menus"
               ]
-            }
+            },
+            "description": "Updates a Menu Item"
           },
           "response": []
         },
@@ -252,7 +230,8 @@
                 "menus",
                 "1"
               ]
-            }
+            },
+            "description": "Soft Deletes the Menu item (i.e Sets the menu item to \"inactive\")"
           },
           "response": []
         },
@@ -277,7 +256,8 @@
                 "restore",
                 "1"
               ]
-            }
+            },
+            "description": "Recovers the deleted menu item (i.e Sets the menu item to \"active\")"
           },
           "response": []
         }
@@ -310,7 +290,8 @@
               "path": [
                 "reserve"
               ]
-            }
+            },
+            "description": "Creates a reservation record. Records with duplicate names are allowed."
           },
           "response": []
         },
@@ -337,7 +318,8 @@
                 "reserve",
                 "upcoming"
               ]
-            }
+            },
+            "description": "Returns all the upcoming reservation based on the current DateTime."
           },
           "response": []
         },
@@ -363,7 +345,8 @@
               "path": [
                 "reserve"
               ]
-            }
+            },
+            "description": "Returns all reservation records."
           },
           "response": []
         },
@@ -383,7 +366,8 @@
                 "reserve",
                 "rajesh"
               ]
-            }
+            },
+            "description": "Returns reservation records by given name."
           },
           "response": []
         },
@@ -394,7 +378,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"bookedDateTime\": \"2023-01-25T20:40:00Z\",\r\n    \"createdDate\": \"2026-07-26T09:56:24Z\",\r\n    \"id\": 1,\r\n    \"name\": \"oreki\",\r\n    \"numberOfCustomers\": 4,\r\n    \"status\": \"active\"\r\n}",
+              "raw": "{\r\n    \"bookedDateTime\": \"2023-01-25T20:40:00Z\",\r\n    \"createdDate\": \"2026-07-26T09:56:24Z\",\r\n    \"id\": 1,\r\n    \"name\": \"oreki\",\r\n    \"numberOfCustomers\": 4,\r\n    \"status\": \"finished\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -411,7 +395,8 @@
               "path": [
                 "reserve"
               ]
-            }
+            },
+            "description": "Updates exisiting reservation record.\n\nCommonly will be used for \"finishing\" a reservation."
           },
           "response": []
         },
@@ -431,7 +416,8 @@
                 "reserve",
                 "1"
               ]
-            }
+            },
+            "description": "Deletes a Reservation Record"
           },
           "response": []
         }
@@ -464,7 +450,29 @@
               "path": [
                 "orders"
               ]
-            }
+            },
+            "description": "Creates an order record.\n\nReturns a response object with \"data\" and \"warningMsg\"\n\nAfter placing an order, backend will auto subtract ingredients required for the menu item from the inventory.\n\nWhen the \"forceOrder\" flag is set to \"false\":\n\n- If there are not enough ingredients left in the inventory, the order WILL NOT be placed and will give a warning message about it.\n    \n- If there are enough ingredients, warningMsg will be null.\n    \n\nWhen the \"forceOrder\" flag is set to \"true\":\n\n- If there are not enough ingredients left in the inventory, the order WILL BE placed and will give a warning message about it.\n    \n- If there are enough ingredients, warningMsg will be null."
+          },
+          "response": []
+        },
+        {
+          "name": "Get all orders of tableID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/orders/2",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "orders",
+                "2"
+              ]
+            },
+            "description": "Returns all \"active\" orders for given TableID."
           },
           "response": []
         },
@@ -493,27 +501,8 @@
                 "orders",
                 "bulk"
               ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Get all orders of tableID",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:8080/orders/2",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "8080",
-              "path": [
-                "orders",
-                "2"
-              ]
-            }
+            },
+            "description": "Adds and/or updates Orders in bulk .\n\nYou can convert any data file into this JSON body by just setting value of \"orderList\" attribute to the data that is converted to JSON.\n\neg.\n\n{\n\n\"orderList\": \\[ \\]\n\n}\n\nReturns a response object with \"data\" and \"warningMsg\"\n\nEach item will be checked before placing. Hence if a certain menu item cannot be ordered due to lack of ingredients:\n\n- that specific order will be SKIPPED and will give a warningMsg about it if \"forceOrder\" = false.\n    \n- that specific order will be PLACED and will give a warningMsg about it of \"forceOrder\" = true."
           },
           "response": []
         },
@@ -541,7 +530,8 @@
               "path": [
                 "orders"
               ]
-            }
+            },
+            "description": "Updates an order record.\n\nNote that assuming the ingredients have already been used from the inventory, the ingredients will NOT be restored in Inventory Table.\n\nHence, the ingredients will be depleted again after updating the request."
           },
           "response": []
         },
@@ -558,7 +548,7 @@
               "raw": "{\r\n    \"seatSize\": 4,\r\n    \"status\": \"free\"\r\n}"
             },
             "url": {
-              "raw": "http://localhost:8080/orders/bill/3",
+              "raw": "http://localhost:8080/orders/bill/2",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -567,9 +557,10 @@
               "path": [
                 "orders",
                 "bill",
-                "3"
+                "2"
               ]
-            }
+            },
+            "description": "Generated a Bill for given TableID.\n\nNote that the Bill will be generated only once, since all the orders for the TableID will become \"finished\".\n\nThe short record of the Bill will be stored in the BillRecords Table."
           },
           "response": []
         },
@@ -596,7 +587,8 @@
                 "orders",
                 "bills"
               ]
-            }
+            },
+            "description": "Returns all the BillRecords generated in chronological order."
           },
           "response": []
         }
@@ -639,7 +631,8 @@
                   "value": "2026-07-25"
                 }
               ]
-            }
+            },
+            "description": "Returns Which dishes got ordered the most between two given Dates (to manage inventory and priority)"
           },
           "response": []
         },
@@ -673,7 +666,8 @@
                   "value": "2026-07-25"
                 }
               ]
-            }
+            },
+            "description": "Return the amount of orders placed in 4 quarters of the day (Morning, Afternoon, Evening, Night)"
           },
           "response": []
         },
@@ -701,7 +695,8 @@
                 "report",
                 "usage"
               ]
-            }
+            },
+            "description": "Returns amount of orders requested for each quarter of the day (Morning, Afternoon, Evening, Night) at specified date."
           },
           "response": []
         },
@@ -739,7 +734,8 @@
                   "value": "asc"
                 }
               ]
-            }
+            },
+            "description": "Returns Inventory data with customizable sorting filters."
           },
           "response": []
         }
@@ -751,6 +747,27 @@
         {
           "name": "Tables",
           "item": [
+            {
+              "name": "Get Free Tables",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8080/tables/free",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "tables",
+                    "free"
+                  ]
+                },
+                "description": "Returns All tables with status = \"free\""
+              },
+              "response": []
+            },
             {
               "name": "Get all tables",
               "request": {
@@ -766,7 +783,8 @@
                   "path": [
                     "tables"
                   ]
-                }
+                },
+                "description": "Returns all tables records"
               },
               "response": []
             },
@@ -794,7 +812,8 @@
                   "path": [
                     "tables"
                   ]
-                }
+                },
+                "description": "Creates a table record"
               },
               "response": []
             },
@@ -822,7 +841,8 @@
                   "path": [
                     "tables"
                   ]
-                }
+                },
+                "description": "Updates an existing table record"
               },
               "response": []
             },
@@ -842,7 +862,8 @@
                     "tables",
                     "4"
                   ]
-                }
+                },
+                "description": "deleted a table record"
               },
               "response": []
             }
